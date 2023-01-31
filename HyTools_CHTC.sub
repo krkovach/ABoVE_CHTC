@@ -1,0 +1,26 @@
+# HyTools_CHTC.sub
+universe = vanilla
+
+# IMPORTANT! Require execute servers that have Staging:
+Requirements = (Target.HasCHTCStaging == true)
+
+# Set files to capture log, standard output & error
+log = log/log.HyTools_$(Cluster)_$(flightname)
+error = log/err.HyTools_$(Cluster)_$(flightname)
+output = log/out.HyTools_$(Cluster)_$(flightname)
+
+# Specify executable
+executable = HyTools_CHTC.sh
+
+# Arguments to pass to the executable
+arguments = $(flightname) $(linecount) $(size)
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+getenv = TRUE
+
+request_cpus = $(linecount)
+request_disk = $(size)GB
+request_memory = 40GB
+
+queue flightname, linecount, size from ABOVE_joblistall.txt

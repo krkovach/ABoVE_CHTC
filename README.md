@@ -6,7 +6,7 @@
    
 2. **HyTools_CHTC.sh** - Bash shell script for processing job on single node (also local machine).
 
-   Runs specific job on each node by lines pulled from locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files**.
+   Runs specific job on each node using lines pulled from url locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files** (as has been the case with existing AVIRIS-NG repos).
 
 #### Processing steps for *HyTools_CHTC.sh* are as follows:
 

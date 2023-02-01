@@ -1,4 +1,3 @@
-# ABoVE_CHTC
 ## Bash workflow for processing HyTools BRDF and topographic corrections, followed by trait estimation for ABoVE data from the AVIRIS-NG sensor.
 
 1. HyTools_CHTC.sub - Initial processing script for submitting jobs to the UW-CHTC cluster.

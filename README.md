@@ -8,7 +8,7 @@
 
    Runs specific job on each node using lines pulled from url locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files** (as has been the case with existing AVIRIS-NG repos).
 
-#### Processing steps for *HyTools_CHTC.sh* are as follows:
+#### Processing steps within *HyTools_CHTC.sh* are as follows:
 
 1. Set environmental variables (specified from **.sub**).
 2. Import and set Python environment (available [here](https://drive.google.com/file/d/1SA5sEl1XUSjpTKohVrjByJXYkqd5eNKi/view?usp=sharing)).  *Add this file to "/Zips"*.

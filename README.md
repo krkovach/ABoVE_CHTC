@@ -1,9 +1,12 @@
 ### Bash workflow for processing HyTools BRDF and topographic corrections, followed by trait estimation for ABoVE data from the AVIRIS-NG sensor.
 
 1. HyTools_CHTC.sub - Initial processing script for submitting jobs to the UW-CHTC cluster.
+   Controls distribution of jobs using parameters from list */Tables/ABOVE_joblistfull.txt*
+   
 2. HyTools_CHTC.sh - Bash shell script for processing job on single node (also local machine).
+   Runs specific job on each node by lines pulled from locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files**.
 
-**.sub** controls distribution of jobs using parameters from list */Tables/ABOVE_joblistfull.txt*.
+**.sub** controls distribution of jobs using parameters from list */Tables/ABOVE_joblistfull.txt*
 
 **.sh** runs specific job on each node by lines pulled from locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files**.
 

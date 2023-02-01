@@ -10,7 +10,7 @@
 
 #### Processing steps within *HyTools_CHTC.sh* are as follows:
 
-1. Set environmental variables (specified from **.sub**).
+1. Set environmental variables (specified from **HyTools_CHTC.sub**).
 2. Import and set Python environment (available [here](https://drive.google.com/file/d/1SA5sEl1XUSjpTKohVrjByJXYkqd5eNKi/view?usp=sharing)).  *Add this file to "/Zips"*.
 3. Import and organize files necessary for processing.
 4. Make folders and populate lists with necessary information from */Tables/ABOVE_Lines.txt* file.

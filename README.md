@@ -8,10 +8,6 @@
 
    Runs specific job on each node by lines pulled from locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files**.
 
-**.sub** controls distribution of jobs using parameters from list */Tables/ABOVE_joblistfull.txt*
-
-**.sh** runs specific job on each node by lines pulled from locations and BRDF grouped according to file */Tables/ABOVE_Lines.txt*.  This file allows for the specification of different locations for both the **OBS_ORT** file and **image binary and .hdr files**.
-
 #### Processing steps for *HyTools_CHTC.sh* are as follows:
 
 1. Set environmental variables (specified from **.sub**).

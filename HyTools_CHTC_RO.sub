@@ -1,0 +1,25 @@
+# HyTools_CHTC.sub
+universe = vanilla
+
+# IMPORTANT! Require execute servers that have Staging:
+Requirements = (Target.HasCHTCStaging == true)
+
+# Set files to capture log, standard output & error
+log = Pr_1/log.HyTools_$(Cluster)_$(lname)
+error = Pr_1/err.HyTools_$(Cluster)_$(lname)
+output = Pr_1/out.HyTools_$(Cluster)_$(lname)
+
+# Specify executable
+executable = HyTools_CHTC_RO.sh
+
+# Arguments to pass to the executable
+arguments = $(lname) $(lcount) $(lsize)
+
+should_transfer_files = NO
+getenv = TRUE
+
+request_cpus = $(lcount)
+request_disk = $(lsize)GB
+request_memory = 75GB
+
+queue lname lcount lsize from tables/joblist.txt

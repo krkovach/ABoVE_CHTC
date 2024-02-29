@@ -1,3 +1,5 @@
+#!/bin/bash
+
 username=kovach3
 
 ENVNAME=py365ht120 #hytools_env

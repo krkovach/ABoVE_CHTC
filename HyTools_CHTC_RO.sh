@@ -38,13 +38,14 @@ rfllist=$(echo $rfllist | tr -d '\r')
 
 #-----Pre-Process-----
 
-#Download
+#Download files
 for DOWNLOAD in "$linklist"; do wget $DOWNLOAD -P $flightnamefolder; done
 for DOWNLOAD in "$rfllist"; do wget $DOWNLOAD -P $flightnamefolder; done
 
-#Unzip and remove
+#Unzip and keep obs_ort and rfl
 for f in $flightnamefolder*.gz; do tar -zxvf $f -C $flightnamefolder; done
 find $flightnamefolder -type f -name '*.tar.gz*' -delete
+find $flightnamefolder -mindepth 1 -type f -not \( -name "*obs_ort*" -o -name "*rfl*" \) -delete
 
 #Move from folders to main folder
 folderlines=$(find $flightnamefolder -mindepth 1 -type d)
@@ -54,12 +55,12 @@ obsort=$(find $flightnamefolder -type f -name '*obs_ort')
 for h in $obsort; do python correct_avng_offset_obs_ort.py -i $h -o $h"_new";done
 
 #Run scripts
-python ./image_correct_json_generate120.py $group $flightnamefolder $(pwd) #python ./image_correct_json_generate.py $group $flightnamefolder $(pwd)
-python ./image_correct120.py ic_config_$group.json #python ./image_correct.py ic_config_$group.json
+python ./image_correct_json_generate120.py $group $flightnamefolder $(pwd)
+python ./image_correct120.py ic_config_$group.json
 
 #Move contents
 mv coeffs/*.json jsons/
-mv coeffs imagery
+mv coeffs/* imagery/
 mv ic_config_$group.json jsons/
 
 #-----Zip and Move-----
@@ -82,9 +83,10 @@ rm -f AVIRIS_NG_Lines.txt
 rm -f correct_avng_offset_obs_ort.py
 rm -r imagery/
 rm -rf jsons/
+rm -rf coeffs/
 rm -rf $flightnamefolder
-rm -f image_correct_json_generate.py
-rm -f image_correct.py
+rm -f image_correct_json_generate120.py
+rm -f image_correct120.py
 rm -f ${group}_imagery.tar
 rm -f ${group}_jsons.tar
 rm -f ${group}_imagery-jsons.tar

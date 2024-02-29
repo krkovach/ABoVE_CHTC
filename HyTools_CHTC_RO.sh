@@ -2,9 +2,9 @@
 
 username=kovach3
 
-ENVNAME=py365ht120 #hytools_env
+ENVNAME=py365ht120
 ENVDIR=$ENVNAME
-group="$1"
+group="2017-06-17_1"
 
 #-----Environment-----
 
@@ -39,6 +39,50 @@ rfllist=$(awk -F' ' '{print$8}' <<< "$filelist")
 rfllist=$(echo $rfllist | tr -d '\r')
 
 #-----Pre-Process-----
+one_exists_obsort=false
+all_exist_obsort=true
+one_exists_rfl=false
+all_exist_rfl=true
+
+for link in "${linklist[@]}"; do
+    if wget --spider "$link" 2>/dev/null; then
+        at_least_one_exists_obsort=true
+    else
+        all_exist_obsort=false
+    fi
+done
+
+if ! $at_least_one_exists_obsort; then
+    echo "None of the obs_ort links exist (all returned 404)" >> obsort_404_$group.txt
+    mv obsort_404_$group.txt /staging/$username/imagery_output/ABOVE/
+    rm ./*
+    exit
+elif ! $all_exist; then
+    echo "Some obs_ort do not exist" >> obsort_partial_$group.txt
+    mv obsort_partial_$group.txt jsons/
+else
+    :
+fi
+
+for link in "${rfllist[@]}"; do
+    if wget --spider "$link" 2>/dev/null; then
+        at_least_one_exists_rfl=true
+    else
+        all_exist_rfl=false
+    fi
+done
+
+if ! $at_least_one_exists_rfl; then
+    echo "None of the rfl links exist (all returned 404)" >> rfl_404_$group.txt
+    mv rfl_404_$group.txt /staging/$username/imagery_output/ABOVE/
+    rm ./*
+    exit
+elif ! $all_exist; then
+    echo "Some rfl do not exist" >> rfl_partial_$group.txt
+    mv rfl_partial_$group.txt jsons/
+else
+    :
+fi
 
 #Download files
 for DOWNLOAD in "$linklist"; do wget $DOWNLOAD -P $flightnamefolder; done

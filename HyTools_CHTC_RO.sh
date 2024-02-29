@@ -4,7 +4,7 @@ username=kovach3
 
 ENVNAME=py365ht120
 ENVDIR=$ENVNAME
-group="2017-06-17_1"
+group="$1"
 
 #-----Environment-----
 
@@ -33,56 +33,12 @@ cp /staging/$username/support/ABOVE/scripts/correct_avng_offset_obs_ort.py ./
 mkdir jsons/
 
 filelist=$(column -s, -t < AVIRIS_NG_Lines.txt | awk -v var="$group" '($1 == var)')
-linklist=$(awk -F' ' '{print$7}' <<< "$filelist")
+linklist=$(awk -F' ' '{print$6}' <<< "$filelist")
 linklist=$(echo $linklist | tr -d '\r')
-rfllist=$(awk -F' ' '{print$8}' <<< "$filelist")
+rfllist=$(awk -F' ' '{print$7}' <<< "$filelist")
 rfllist=$(echo $rfllist | tr -d '\r')
 
 #-----Pre-Process-----
-one_exists_obsort=false
-all_exist_obsort=true
-one_exists_rfl=false
-all_exist_rfl=true
-
-for link in "${linklist[@]}"; do
-    if wget --spider "$link" 2>/dev/null; then
-        at_least_one_exists_obsort=true
-    else
-        all_exist_obsort=false
-    fi
-done
-
-if ! $at_least_one_exists_obsort; then
-    echo "None of the obs_ort links exist (all returned 404)" >> obsort_404_$group.txt
-    mv obsort_404_$group.txt /staging/$username/imagery_output/ABOVE/
-    rm ./*
-    exit
-elif ! $all_exist; then
-    echo "Some obs_ort do not exist" >> obsort_partial_$group.txt
-    mv obsort_partial_$group.txt jsons/
-else
-    :
-fi
-
-for link in "${rfllist[@]}"; do
-    if wget --spider "$link" 2>/dev/null; then
-        at_least_one_exists_rfl=true
-    else
-        all_exist_rfl=false
-    fi
-done
-
-if ! $at_least_one_exists_rfl; then
-    echo "None of the rfl links exist (all returned 404)" >> rfl_404_$group.txt
-    mv rfl_404_$group.txt /staging/$username/imagery_output/ABOVE/
-    rm ./*
-    exit
-elif ! $all_exist; then
-    echo "Some rfl do not exist" >> rfl_partial_$group.txt
-    mv rfl_partial_$group.txt jsons/
-else
-    :
-fi
 
 #Download files
 for DOWNLOAD in "$linklist"; do wget $DOWNLOAD -P $flightnamefolder; done
@@ -124,18 +80,20 @@ fi
 
 #-----Clean Up Remote Node-----
 
-rm -rf $ENVDIR
-rm -f AVIRIS_NG_Lines.txt
-rm -f correct_avng_offset_obs_ort.py
-rm -r imagery/
-rm -rf jsons/
-rm -rf coeffs/
-rm -rf $flightnamefolder
-rm -f image_correct_json_generate120.py
-rm -f image_correct120.py
-rm -f ${group}_imagery.tar
-rm -f ${group}_jsons.tar
-rm -f ${group}_imagery-jsons.tar
+rm -rf ./*
+
+# rm -rf $ENVDIR
+# rm -f AVIRIS_NG_Lines.txt
+# rm -f correct_avng_offset_obs_ort.py
+# rm -r imagery/
+# rm -rf jsons/
+# rm -rf coeffs/
+# rm -rf $flightnamefolder
+# rm -f image_correct_json_generate120.py
+# rm -f image_correct120.py
+# rm -f ${group}_imagery.tar
+# rm -f ${group}_jsons.tar
+# rm -f ${group}_imagery-jsons.tar
 
 # mailx -s '$(group) Done' 8149374272@vtext.com < status.txt
 # rm -f status.txt

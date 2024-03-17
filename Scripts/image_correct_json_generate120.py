@@ -133,8 +133,8 @@ config_dict["topo"]['calc_mask'] = [["ndi", {'band_1': 850,'band_2': 660,
                                                   'min': 0.12,'max':'+inf' }],
                                     ['cloud',{'method':'zhai_2018',
                                               'cloud':True,'shadow':True,
-                                              'T1': 1,'t2': .5,'t3': 1/3,
-                                              't4': 2/3,'T7': 15,'T8': 15}]]
+                                              'T1': 0.01,'t2': 1/10,'t3': 1/4,
+                                              't4': 1/2,'T7': 9,'T8': 9}]]
 
 config_dict["topo"]['apply_mask'] = [["ndi", {'band_1': 850,'band_2': 660,
                                              'min': 0.1,'max': 1.0}],
